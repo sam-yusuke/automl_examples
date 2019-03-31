@@ -6,7 +6,7 @@ from sklearn.metrics import precision_score, make_scorer
 from hyperopt import tpe, hp, fmin
 
 X, y = datasets.load_breast_cancer(return_X_y=True)
-X_choose,x_test,y_choose,y_test = train_test_split(X,y,test_size=0.3)
+X_choose,X_test,y_choose,y_test = train_test_split(X,y,test_size=0.3)
 
 def create_classifier(args):
     if args['model']==KNeighborsClassifier:
@@ -60,5 +60,5 @@ best_classifier = fmin(objective_func,space,
 print(space_eval(space, best_classifier))
 clf = create_classifier(space_eval(space, best_classifier))
 clf.fit(X_choose, y_choose)
-y_pred = clf.predict(x_test)
+y_pred = clf.predict(X_test)
 print(classification_report(y_test, y_pred))
